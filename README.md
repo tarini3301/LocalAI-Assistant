@@ -8,27 +8,34 @@
 
 ##  Overview
 
-**LocalAI-Assistant** is a fully private, offline AI-powered assistant that runs on your local machine. It supports multiple AI models like **Llama, Mistral, DeepSeek, Phi, TinyLlama**, and offers features such as:
+**LocalAI-Assistant** is a fully private, offline AI-powered assistant that runs directly on your local machine. It integrates multiple advanced AI models like **Llama, Mistral, DeepSeek, Phi, TinyLlama, and LLaVA**, providing a seamless and privacy-focused experience without any cloud dependency.
 
--  **Chat with LLMs (Offline)**
--  **PDF Summarization**
--  **Voice Input & Output (Speech-to-Text & Text-to-Speech)**
--  **Image Analysis with LLaVA**
--  **Chat with Documents using RAG (Retrieval-Augmented Generation)**
--  **Multi-Chat Memory (Auto Save) with Rename, Delete, Recycle Bin with Restore**
--  **No Internet Required. 100% Local & Private**
+###  Key Features
+
+-  **Chat with LLMs (Offline)** — Converse with AI models locally
+-  **PDF Summarization & Document Q&A** — Upload documents and interact with them using AI
+-  **Voice Input & Output** — Convert speech to text (Whisper) and text to speech (pyttsx3) — fully offline
+-  **Image Analysis with LLaVA** — Understand and analyze image content through AI-powered vision models
+-  **Chat with Documents via RAG** — Retrieval-Augmented Generation for querying custom knowledge bases
+-  **Multi-Chat Memory Management** — Auto-save chats with options to rename, delete, and restore from a recycle bin
+-  **100% Local & Private** — No internet required, no data leaves your machine
 
 ---
 
 ##  Tech Stack
 
--  **Ollama** — Run LLMs like Llama3, Mistral, DeepSeek, Phi, TinyLlama, LLaVA
--  **Streamlit** — For the web-based UI
--  **LangChain** — For Document RAG (Chat with Docs)
--  **Whisper** — Speech to Text (Offline)
--  **pyttsx3** — Text to Speech (Offline)
--  **LLaVA** — Vision-based LLM for Image Analysis
--  **JSON-based Local Storage** — For chat memory persistence
+| Component              | Description                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| **Ollama**             | Run LLMs locally (Supports Llama3, Mistral, DeepSeek, Phi, TinyLlama, LLaVA) |
+| **Streamlit**          | Web-based user interface for easy interaction                                |
+| **LangChain**          | Enables document-based RAG (Retrieval-Augmented Generation)                  |
+| **Whisper (Offline)**  | Speech-to-Text model for voice input                                         |
+| **pyttsx3 (Offline)**  | Text-to-Speech for voice responses                                           |
+| **LLaVA**              | Vision-Language model for AI-powered image analysis                          |
+| **Local JSON Storage** | Chat history, knowledge base, and recycle bin management                     |
+
+---
+
 
 ---
 
