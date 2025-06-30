@@ -11,3 +11,4 @@ Pillow
 markdown-it-py
 pygments
 rich
+faster-whisper
