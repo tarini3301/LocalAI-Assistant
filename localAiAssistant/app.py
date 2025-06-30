@@ -540,91 +540,83 @@ Answer:"""
 
 
 
-# Image analysis
+# 🖼️ Image Analysis
 elif mode == "Image Analysis":
     st.subheader("🖼️ Image Analysis & Chat with Memory")
 
     image = st.file_uploader("📤 Upload Image", type=["jpg", "jpeg", "png"])
 
     if image:
-        # ✅ Show the uploaded image
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
-        # ✅ Initialize chat history if not exists
+        # ✅ Initialize chat history for this image session
         if "image_chat_history" not in st.session_state:
             st.session_state.image_chat_history = []
 
-        # ✅ Input prompt for image chat
+        # ✅ Input prompt for image-based question
         prompt = st.text_input("💬 Ask something about this image:")
 
-        if st.button("🔍 Analyze"):
-            with st.status("🤖 Generating response...", expanded=True) as status:
-                progress = st.progress(0)
+        if st.button("🔍 Analyze") and prompt:
+            try:
+                with st.spinner("🔍 Analyzing image..."):
 
-                for percent_complete in range(100):
-                    progress.progress(
-                        (percent_complete + 1) / 100,
-                        text=f"Analyzing... {percent_complete + 1}%"
-                    )
-                    import time
-                    time.sleep(0.01)
-
-                try:
-                    # 🔥 Analyze with image and chat history
+                    # 🔥 Image analysis function call
                     response = analyze_image_with_llava(
-                        image, prompt, history=st.session_state.image_chat_history
+                        img_file=image,  # ✅ Corrected argument name
+                        query=prompt,
+                        history=st.session_state.image_chat_history
                     )
 
-                    # 🔥 Append to chat history
-                    st.session_state.image_chat_history.append(("user", prompt))
-                    st.session_state.image_chat_history.append(("assistant", response))
+                # ✅ Update chat history
+                st.session_state.image_chat_history.append(("User", prompt))
+                st.session_state.image_chat_history.append(("Assistant", response))
 
-                    # 🔥 Store the response into vector DB for future searches
-                    store_data(doc_id=image.name + "_" + str(len(st.session_state.image_chat_history)), text=response)
+                # ✅ Store the response into Vector DB
+                store_data(db,
+                    doc_id=f"{image.name}_{len(st.session_state.image_chat_history)}",
+                    text=response
+                )
 
-                    progress.empty()
-                    status.update(label="✅ Response ready!", state="complete")
-                    st.subheader("Response")
-                    st.success(response)
-                    st.info("✅ Description saved for searching.")
+                st.subheader("🤖 Assistant Response")
+                st.success(response)
+                st.info("✅ Description saved for future search.")
 
-                except Exception as e:
-                    progress.empty()
-                    status.update(label="❌ Failed", state="error")
-                    st.error(f"❌ Error: {e}")
+            except Exception as e:
+                st.error(f"❌ Error: {e}")
 
         # ✅ Display chat history
         if st.session_state.image_chat_history:
             with st.expander("📝 Chat History with Image"):
                 for role, content in st.session_state.image_chat_history:
-                    if role == "user":
-                        st.markdown(f"**🧑‍💻 You:** {content}")
-                    else:
-                        st.markdown(f"**🤖 Assistant:** {content}")
+                    st.markdown(f"**{role}:** {content}")
 
-        # ✅ Clear chat history
+        # ✅ Clear chat history button
         if st.button("🗑️ Clear Chat History"):
             st.session_state.image_chat_history = []
 
         st.markdown("---")
 
-        # 🔍 Vector Search on Stored Image Descriptions
+        # 🔍 Search Across Stored Image Descriptions
         st.subheader("🔎 Search Across Stored Image Descriptions")
 
         search_query = st.text_input("💬 Ask about any stored images:")
 
-        if st.button("🔍 Search Images"):
-            results = search_data(db, search_query, top_k=3)
-            if results["documents"]:
-                st.subheader("🔍 Search Results")
-                for doc in results["documents"][0]:
-                    st.markdown(f"🖼️ {doc}")
-            else:
-                st.info("No similar images found.")
+        if st.button("🔍 Search") and search_query:
+            try:
+                results = search_data(search_query, top_k=3)
+
+                if results and results.get("documents"):
+                    st.subheader("🔍 Search Results")
+                    for doc in results["documents"][0]:
+                        st.markdown(f"🖼️ {doc}")
+                else:
+                    st.info("No matching results found.")
+
+            except Exception as e:
+                st.error(f"❌ Search Error: {e}")
 
     else:
         st.info("📤 Please upload an image to start.")
-
 
 
 # 🔍 Knowledge Base Mode
