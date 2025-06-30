@@ -13,3 +13,4 @@ pygments
 rich
 faster-whisper
 chromadb
+protobuf==3.20.*
