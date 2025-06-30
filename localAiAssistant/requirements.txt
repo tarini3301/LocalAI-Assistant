@@ -1,0 +1,9 @@
+streamlit
+requests
+pdfplumber
+faster-whisper
+gtts
+pyttsx3
+faiss-cpu
+langchain
+pypdf2
