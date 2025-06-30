@@ -31,4 +31,3 @@ watchdog
 matplotlib
 
 gtts
-playsound
