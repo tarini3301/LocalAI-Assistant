@@ -12,3 +12,4 @@ markdown-it-py
 pygments
 rich
 faster-whisper
+chromadb
