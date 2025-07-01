@@ -31,3 +31,9 @@ watchdog
 matplotlib
 
 gtts
+
+faster-whisper
+chromadb
+pymupdf
+st-audiorec
+
