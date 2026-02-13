@@ -60,10 +60,10 @@ cd LocalAI-Assistant
 Create a virtual environment (recommended):
 
 ```bash
-python -m venv venv
+python -m venv offenv
 # Activate it:
-venv\Scripts\activate  # On Windows
-source venv/bin/activate  # On Mac/Linux
+offenv\Scripts\activate  # On Windows
+source offenv/bin/activate  # On Mac/Linux
 ```
 
 ```bash
